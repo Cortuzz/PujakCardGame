@@ -2,7 +2,7 @@
 
 namespace PujakCardGame;
 
-public class UnitCard : AbstractCard
+public class UnitCard : Card
 {
     private int _health;
     public int Health 
@@ -33,15 +33,15 @@ public class UnitCard : AbstractCard
 
     public UnitCard(string name) : base(name)
     {
+        
     }
-
-
+    
     public override bool PlayCard(GameTable table, Hero hero, ITargetable target)
     {
         throw new NotImplementedException();
     }
 
-    public Damage Attack(AbstractCard causer, Hero instigator)
+    public Damage Attack(Card causer, Hero instigator)
     {
         throw new NotImplementedException();
     }

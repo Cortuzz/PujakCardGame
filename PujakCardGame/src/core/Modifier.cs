@@ -1,8 +1,7 @@
 ﻿namespace PujakCardGame;
 
-public abstract class Modifier // : IObserver
+public abstract class Modifier
 {
-    public string Name { get; protected set; }
-    public AbstractCard Card { get; protected set; }
-
+    public string Name { get; set; }
+    public abstract Card Card { get; set; }
 }

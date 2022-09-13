@@ -3,21 +3,11 @@
     public enum DamageType
     {
         Pure,
-        Phisical,
+        Physical,
         Magic
     }
 
-    public class Damage
-    {
-        public int amount;
-        public DamageType type;
+    public record Damage(int Amount, DamageType DamageType);
 
-        public Damage(int amount, DamageType type)
-        {
-            this.amount = amount;
-            this.type = type;
-        }
-    }
-
-    public delegate void DamageEvent(Damage damage, Hero instigator, AbstractCard causer);
+    public delegate void DamageEvent(Damage damage, Hero instigator, Card causer);
 }

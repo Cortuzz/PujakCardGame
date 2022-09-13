@@ -1,7 +1,7 @@
 ﻿namespace PujakCardGame;
 
 /// <summary>
-/// Depricated
+/// Deprecated
 /// </summary>
 public interface IObserver
 {

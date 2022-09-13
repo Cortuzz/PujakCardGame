@@ -2,7 +2,11 @@
 
 public class TestModifier : Modifier
 {
-    public TestModifier(AbstractCard card)
+    
+    public string Name { get; set; }
+    public override Card Card { get; set; }
+
+    public TestModifier(Card card)
     {
         Card = card;
         card.CardPlayed += Update;
