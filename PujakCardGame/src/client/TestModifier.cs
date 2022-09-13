@@ -5,19 +5,16 @@ public class TestModifier : Modifier
     public TestModifier(AbstractCard card)
     {
         Card = card;
-        card.Subscribe(this);
+        card.CardPlayed += Update;
     }
 
-    public override void Update(IObservable observable, EventType et)
+    private void Update(object card, Hero caster)
     {
-        if (et != EventType.CardPlaced)
-            return;
-        
         System.Diagnostics.Debug.Write("\n\n\nЯ отработал)\n\n\n");
     }
 
     ~TestModifier()
     {
-        Card.Unsubscribe(this);
+        Card.CardPlayed -= Update;
     }
 }

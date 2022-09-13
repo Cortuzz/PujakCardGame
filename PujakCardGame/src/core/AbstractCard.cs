@@ -19,8 +19,8 @@ public abstract class AbstractCard: IModifiable // , IObservable
     public abstract bool PlayCard(GameTable table, Hero hero, ITargetable target);
 
     /// <summary> TEventArgs -> Hero -- hero plays that card</summary>
-    event EventHandler<Hero> CardPlayed;
+    public event EventHandler<Hero> CardPlayed;
 
     /// <summary> TEventArgs -> int  -- delta mana </summary>
-    event EventHandler<int> ManaChanged;
+    public event EventHandler<int> ManaChanged;
 }

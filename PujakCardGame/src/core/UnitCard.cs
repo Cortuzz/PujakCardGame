@@ -47,10 +47,10 @@ public class UnitCard : AbstractCard
     }
 
     /// <summary> TEventArgs -> int  -- delta health </summary>
-    event EventHandler<int> HealthChanged;
+    public event EventHandler<int> HealthChanged;
 
     /// <summary> TEventArgs -> int  -- delta damage </summary>
-    event EventHandler<int> DamageChanged;
+    public event EventHandler<int> DamageChanged;
 
-    event DamageEvent CardDamaged;
+    public event DamageEvent CardDamaged;
 }
