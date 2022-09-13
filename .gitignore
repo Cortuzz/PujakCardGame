@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs/PujakCardGame/v17
+/PujakCardGame/obj
+/PujakCardGame/bin
+/.vs

@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace PujakCardGame;
 
-public class Game1 : Game
+public class CardGame : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    public Game1()
+    public CardGame()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";

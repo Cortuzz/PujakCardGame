@@ -2,7 +2,7 @@
 
 public class TestModifier : Modifier
 {
-    public TestModifier(Card card)
+    public TestModifier(AbstractCard card)
     {
         Card = card;
         card.Subscribe(this);

@@ -1,5 +1,8 @@
 ﻿namespace PujakCardGame;
 
+/// <summary>
+/// Depricated
+/// </summary>
 public interface IObservable
 {
     public void Subscribe(IObserver observer);
