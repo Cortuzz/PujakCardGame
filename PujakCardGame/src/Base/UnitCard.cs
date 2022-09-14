@@ -31,14 +31,12 @@ public class UnitCard : Card
     }
 
 
-    public UnitCard(string name) : base(name)
-    {
-        
-    }
+    public UnitCard(string name) : base(name) { }
     
     public override bool PlayCard(GameTable table, Hero hero, ITargetable target)
     {
-        throw new NotImplementedException();
+        // todo
+        return base.PlayCard(table, hero, target);
     }
 
     public Damage Attack(Card causer, Hero instigator)

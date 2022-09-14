@@ -2,5 +2,5 @@
 
 public interface ITargetable
 {
-    public bool TryTarget(ITargetable targeter);
+    public bool TryTarget(object targeter);
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using PujakCardGame;
-using PujakCardGame.client;
+using PujakCardGame.ConcreteModifiers;
 
 Card card = new UnitCard("Говно");
 Modifier modifier = new TestModifier(card);
