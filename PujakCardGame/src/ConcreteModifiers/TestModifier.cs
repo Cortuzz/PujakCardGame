@@ -1,20 +1,12 @@
 ﻿namespace PujakCardGame.ConcreteModifiers;
 
-public class TestModifier : Modifier, IAttackHandler, ITargetingHandler
+public class TestModifier : Modifier<Card>, IAttackHandler, ITargetingHandler
 {
-    
-    public string Name { get; set; }
-    public override Card Card { get; set; }
+    public int Priority => int.MinValue;
 
-    public int Priority => throw new System.NotImplementedException();
+    public override string Name => GetType().Name;
 
-    public TestModifier(Card card)
-    {
-        Card = card;
-        card.CardPlayed += Update;
-    }
-
-    private void Update(object card, Hero caster)
+    private void _onCardPlayed(object card, Hero caster)
     {
         System.Diagnostics.Debug.Write("\n\n\nЯ отработал)\n\n\n");
     }
@@ -29,8 +21,19 @@ public class TestModifier : Modifier, IAttackHandler, ITargetingHandler
         throw new System.NotImplementedException();
     }
 
+    protected override void _onTargetAttached()
+    {
+        Target.CardPlayed += _onCardPlayed;
+    }
+
+    protected override void _onTargetDetaching()
+    {
+        Target.CardPlayed -= _onCardPlayed;
+    }
+
     ~TestModifier()
     {
-        Card.CardPlayed -= Update;
+        if (_target is Card card)
+            card.CardPlayed -= _onCardPlayed;
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PujakCardGame;
 
-public class UnitCard : Card
+public class UnitCard : Card, IDamageable
 {
     private int _health;
     public int Health 
@@ -17,29 +18,23 @@ public class UnitCard : Card
         }
     }
 
-    private int _damage;
-    public int Damage
-    {
-        get => _damage;
-        set
-        {
-            if (_damage == value) return;
-            var d = value - _damage;
-            _damage = value;
-            DamageChanged?.Invoke(this, d);
-        }
-    }
+    public Damage Damage { get; set; }
 
-
-    public UnitCard(string name) : base(name) { }
+    public UnitCard(string name, Hero owner) : base(name, owner) { }
     
     public override bool PlayCard(GameTable table, Hero hero, ITargetable target)
     {
         // todo
         return base.PlayCard(table, hero, target);
     }
+    
+    public void Attack(IDamageable target)
+    {
+        var request = new DamageRequest(Damage, this, target, _owner);
+        foreach (var mod in GetModifiers());
+    }
 
-    public Damage Attack(Card causer, Hero instigator)
+    public Damage GetAttacked(DamageRequest request)
     {
         throw new NotImplementedException();
     }
@@ -47,8 +42,5 @@ public class UnitCard : Card
     /// <summary> TEventArgs -> int  -- delta health </summary>
     public event EventHandler<int> HealthChanged;
 
-    /// <summary> TEventArgs -> int  -- delta damage </summary>
-    public event EventHandler<int> DamageChanged;
-
-    public event DamageEvent CardDamaged;
+    public event EventHandler<DamageRequest> Damaged;
 }

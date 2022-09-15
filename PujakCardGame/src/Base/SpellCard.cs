@@ -4,7 +4,7 @@ namespace PujakCardGame
 {
     public class SpellCard : Card
     {
-        public SpellCard(string name) : base(name) { }
+        public SpellCard(string name, Hero owner) : base(name, owner) { }
 
         public override bool PlayCard(GameTable table, Hero hero, ITargetable target)
         {

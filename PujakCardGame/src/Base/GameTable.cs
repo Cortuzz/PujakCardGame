@@ -13,8 +13,6 @@ public class GameTable
         Enemy = enemy;
     }
 
-    // + GetHeroCards(Hero) : List<AbstractCard>
-
     public bool PlayCard(Card card, Hero caster, ITargetable target)
     {
         throw new NotImplementedException();
