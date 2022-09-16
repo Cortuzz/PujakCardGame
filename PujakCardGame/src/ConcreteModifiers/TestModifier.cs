@@ -16,7 +16,7 @@ public class TestModifier : Modifier<Card>, IAttackHandler, ITargetingHandler
         throw new System.NotImplementedException();
     }
 
-    public void Handle(Card caller, Damage result)
+    public void Handle(Card caller, DamageRequest result)
     {
         throw new System.NotImplementedException();
     }
