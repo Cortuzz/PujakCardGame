@@ -2,5 +2,5 @@
 
 public interface ITargetable
 {
-    public bool TryTarget(object targeter);
+    public bool TryTarget(Card targeter);
 }

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using PujakCardGame.Utils;
 using System;
+using System.Collections.Generic;
 
 namespace PujakCardGame;
 
-public abstract class Card : IModifiable
+public abstract class Card : IModifiable, ITargetable
 {
     private int _mana;
     public int Mana
@@ -20,19 +21,16 @@ public abstract class Card : IModifiable
     }
 
     public readonly string Name;
-    protected readonly Hero _owner;
+    public virtual Hero Owner { get; protected set; }
 
-    private List<IModifier> _modifiers;
+    private readonly List<IModifier> _modifiers;
 
-    public Card(string name, Hero owner)
+    public Card(string name) => Name = name;
+
+    public virtual bool PlayCard(GameTable table, Hero hero, ITargetable? target)
     {
-        Name = name;
-        _owner = owner;
-    }
-
-    public virtual bool PlayCard(GameTable table, Hero hero, ITargetable target)
-    {
-        CardPlayed!.Invoke(this, hero);
+        Owner = hero;
+        CardPlayed?.Invoke(this, hero);
         return true;
     }
 
@@ -46,8 +44,17 @@ public abstract class Card : IModifiable
 
     public void RemoveModifier(IModifier modifier)
     {
-        _modifiers.Add(modifier);
+        _modifiers.Remove(modifier);
         modifier.Target = null;
+    }
+
+    public bool TryTarget(Card targeter)
+    {
+        var contition = new TargetingTransitionResult(true);
+        foreach (var mod in _modifiers.PrioritySortedWhereType<ITargetingHandler>())
+            mod.Handle(targeter, contition);
+
+        return contition.Result;
     }
 
     /// <summary> TEventArgs -> Hero -- hero plays that card</summary>
