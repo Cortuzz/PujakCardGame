@@ -1,25 +1,38 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace PujakCardGame;
 
 public class GameTable
 {
-    public readonly Hero Enemy;
-    public readonly Hero Charecter;
+    private readonly Dictionary<Hero, Field> _charactersFields = new();
+    private int _curCharacterIndex;
 
-    public GameTable(Hero charecter, Hero enemy)
+    public IEnumerable<Hero> Characters => _charactersFields.Keys;
+
+    public void AddCharacter(Hero character, int initialFieldSize)
     {
-        Charecter = charecter;
-        Enemy = enemy;
+        character.Table = this;
+        _charactersFields.Add(character, new Field() { MaxSize = initialFieldSize });
     }
 
     public bool PlayCard(Card card, Hero caster, ITargetable target)
     {
-        throw new NotImplementedException();
+        if (!card.Play(this, caster, target)) return false;
+        CardPlayed?.Invoke(this, card);
+        return true;
     }
 
-    public Field GetHerosField(Hero owner)
+    public Field GetHerosField(Hero owner) => _charactersFields[owner];
+
+    public void NextTurn()
     {
-        throw new NotImplementedException();
+        var characters = _charactersFields.Keys;
+        System.Diagnostics.Debug.Assert(characters.Count > 0, "Count of characters in table was less than 1");
+        _curCharacterIndex = ++_curCharacterIndex % characters.Count;
+        characters.ElementAt(_curCharacterIndex).MakeTurn();
     }
+
+    public event EventHandler<Card> CardPlayed;
 }

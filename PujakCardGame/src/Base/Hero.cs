@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using PujakCardGame.Utils;
 
 namespace PujakCardGame;
 
 public class Hero : IDamageable, ITargetable, IModifiable
 {
-    public readonly List<Card> Cards = new();
+    public readonly List<Card> Hand = new();
+    public GameTable Table { get; set; }
 
     private int _health;
     public int Health
@@ -61,6 +61,12 @@ public class Hero : IDamageable, ITargetable, IModifiable
         return contition.Result;
     }
 
+    public void MakeTurn()
+    {
+        throw new NotImplementedException();
+    }
+
     public event EventHandler<DamageRequest> Damaged;
     public event EventHandler<int> HealthChanged;
+    public event EventHandler TurnBegan;
 }

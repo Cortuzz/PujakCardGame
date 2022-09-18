@@ -1,4 +1,4 @@
-﻿namespace PujakCardGame;
+﻿namespace PujakCardGame.Deprecated;
 
 /// <summary>
 /// Deprecated

@@ -16,6 +16,7 @@ public class UnitCard : Card, IDamageable
             var d = value - _health;
             _health = value;
             HealthChanged?.Invoke(this, d);
+            if (_health <= 0) Dispose();
         }
     }
 
@@ -23,14 +24,14 @@ public class UnitCard : Card, IDamageable
 
     public UnitCard(string name) : base(name) { }
     
-    public override bool PlayCard(GameTable table, Hero hero, ITargetable target)
+    public override bool Play(GameTable table, Hero hero, ITargetable target)
     {
         // Unit cards must be placed on table, not executed on target
         if (target != null) return false;
         // Placing card on table could be not successful
         if (!table.GetHerosField(hero).TryPlaceCard(this)) return false; 
 
-        return base.PlayCard(table, hero, target);
+        return base.Play(table, hero, target);
     }
     
     public void Attack(IDamageable target)

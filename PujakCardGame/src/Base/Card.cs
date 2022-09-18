@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PujakCardGame;
 
-public abstract class Card : IModifiable, ITargetable
+public abstract class Card : IModifiable, ITargetable, IDisposable
 {
     private int _mana;
     public int Mana
@@ -23,14 +23,14 @@ public abstract class Card : IModifiable, ITargetable
     public readonly string Name;
     public virtual Hero Owner { get; protected set; }
 
-    private readonly List<IModifier> _modifiers;
+    private readonly List<IModifier> _modifiers = new();
 
     public Card(string name) => Name = name;
 
-    public virtual bool PlayCard(GameTable table, Hero hero, ITargetable? target)
+    public virtual bool Play(GameTable table, Hero hero, ITargetable target)
     {
         Owner = hero;
-        CardPlayed?.Invoke(this, hero);
+        Played?.Invoke(this, hero);
         return true;
     }
 
@@ -57,9 +57,19 @@ public abstract class Card : IModifiable, ITargetable
         return contition.Result;
     }
 
+    public void Dispose()
+    {
+        Disposing?.Invoke(this, EventArgs.Empty);
+        foreach (var mod in _modifiers) mod.Target = null;
+        _modifiers.Clear();
+        Owner = null;
+    }
+
     /// <summary> TEventArgs -> Hero -- hero plays that card</summary>
-    public event EventHandler<Hero> CardPlayed;
+    public event EventHandler<Hero> Played;
 
     /// <summary> TEventArgs -> int  -- delta mana </summary>
     public event EventHandler<int> ManaChanged;
+
+    public event EventHandler Disposing;
 }

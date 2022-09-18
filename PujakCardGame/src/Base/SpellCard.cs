@@ -7,14 +7,14 @@ namespace PujakCardGame
     {
         public SpellCard(string name) : base(name) { }
 
-        public override bool PlayCard(GameTable table, Hero hero, ITargetable target)
+        public override bool Play(GameTable table, Hero hero, ITargetable target)
         {
             Owner = hero;
             if (!target.TryTarget(this)) return false;
             foreach (var mod in GetModifiers().PrioritySortedWhereType<ICastHandler>())
                 mod.Handle(this, target);    
 
-            return base.PlayCard(table, hero, target);
+            return base.Play(table, hero, target);
         }
     }
 }

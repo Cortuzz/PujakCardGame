@@ -1,4 +1,6 @@
-﻿namespace PujakCardGame.ConcreteModifiers;
+﻿using System.Diagnostics;
+
+namespace PujakCardGame.ConcreteModifiers;
 
 public class TestModifier : Modifier<Card>, IAttackHandler, ITargetingHandler
 {
@@ -8,32 +10,33 @@ public class TestModifier : Modifier<Card>, IAttackHandler, ITargetingHandler
 
     private void _onCardPlayed(object card, Hero caster)
     {
-        System.Diagnostics.Debug.Write("\n\n\nЯ отработал)\n\n\n");
+        Debug.Write(Name + " handled Played event on card");
     }
 
     public void Handle(Card caller, TargetingTransitionResult result)
     {
-        throw new System.NotImplementedException();
+        Debug.WriteLine(Name + " did nothing on targeting");
     }
 
     public void Handle(Card caller, DamageRequest result)
     {
-        throw new System.NotImplementedException();
+        result.Damage = result.Damage with { Amount = result.Damage.Amount + 1 };
+        Debug.WriteLine(Name + " adds 1 damage unit");
     }
 
     protected override void _onTargetAttached()
     {
-        Target.CardPlayed += _onCardPlayed;
+        Target.Played += _onCardPlayed;
     }
 
     protected override void _onTargetDetaching()
     {
-        Target.CardPlayed -= _onCardPlayed;
+        Target.Played -= _onCardPlayed;
     }
 
     ~TestModifier()
     {
         if (_target is Card card)
-            card.CardPlayed -= _onCardPlayed;
+            card.Played -= _onCardPlayed;
     }
 }
