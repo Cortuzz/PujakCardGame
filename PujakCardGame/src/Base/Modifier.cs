@@ -3,6 +3,10 @@ using System;
 
 namespace PujakCardGame;
 
+/// <summary>
+/// If you to create modifiers inside <see cref="CardsDirector"/>, 
+/// your constructors must have parameters only of type 'double'
+/// </summary>
 public interface IModifier
 {
     public string Name { get; }

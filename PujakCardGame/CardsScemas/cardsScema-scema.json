@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "JSON Schema for my JSON file format",
+
+  "type": "object",
+
+  "definitions": {
+    "Modifiers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Name": { "type": "string" },
+          "Args": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "description": "All numbers are considered as 'doubles''"
+            }
+          }
+        },
+        "required": [ "Name" ]
+      }
+    },
+    "DamageType": {
+      "enum": [ 0, 1, 2 ],
+      "description": "0 - Pure, 1 - Physical, 2 - Magic"
+    }
+  },
+
+  "properties": {
+    "UsingNamespaces": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minLength": 1
+    },
+    "UnitCards": {
+      "type": "array",
+      "items": {
+        "required": [ "Name", "Damage", "Mana", "Modifiers", "Health" ],
+        "properties": {
+          "Name": { "type": "string" },
+          "Health": { "type": "number" },
+          "Mana": { "type": "number" },
+          "Damage": {
+            "type": "object",
+            "properties": {
+              "Amount": { "type": "number" },
+              "Type": { "$ref": "#/definitions/DamageType" }
+            }
+          },
+          "Modifiers": { "$ref": "#/definitions/Modifiers" }
+        }
+      }
+    },
+    "SpellCards": {
+      "type": "array",
+      "items": {
+        "required": [ "Name", "Mana", "Modifiers" ],
+        "properties": {
+          "Name": { "type": "string" },
+          "Mana": { "type": "number" },
+          "Modifiers": { "$ref": "#/definitions/Modifiers" }
+        }
+      }
+    }
+  }
+}

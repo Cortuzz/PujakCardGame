@@ -9,7 +9,7 @@ namespace PujakCardGame
         Magic
     }
 
-    public readonly record struct Damage(int Amount, DamageType DamageType);
+    public readonly record struct Damage(int Amount, DamageType Type);
 #nullable enable
     public record DamageRequest(Damage Damage , Card? Causer = null, IDamageable? Target = null, Hero? Instigator = null)
     {

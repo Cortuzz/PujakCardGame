@@ -34,6 +34,12 @@ public class TestModifier : Modifier<Card>, IAttackHandler, ITargetingHandler
         Target.Played -= _onCardPlayed;
     }
 
+    public TestModifier() { }
+    public TestModifier(double argument)
+    {
+        Debug.WriteLine(GetType().Name + " was creted with argument " + argument);
+    }
+
     ~TestModifier()
     {
         if (_target is Card card)

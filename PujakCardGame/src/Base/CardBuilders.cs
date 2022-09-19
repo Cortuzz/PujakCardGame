@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using PujakCardGame;
 
-namespace PujakCardGame.Base
+namespace PujakCardGame
 {
     public abstract class CardBuilder
     {
@@ -44,31 +44,6 @@ namespace PujakCardGame.Base
             product.Health = Health;
             product.Damage = Damage;
             return product;
-        }
-    }
-
-    public class CardsDirector
-    {
-        private CardsDirector() { }
-
-        public static CardsDirector Instance = new CardsDirector();
-
-        private readonly Dictionary<string, CardBuilder> _builders = new();
-
-        private CardBuilder _configureBuilderFor(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Card constructCard(string name)
-        {
-            if (!_builders.TryGetValue(name, out CardBuilder builder))
-            {
-                builder = _configureBuilderFor(name);
-                _builders.Add(name, builder);
-            }
-            return builder.Build();
-
         }
     }
 }
