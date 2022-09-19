@@ -43,7 +43,7 @@ namespace PujakCardGame
                         types[j] = scema.Args![j].GetType();
 
                     _processedScemas[i] = new ProcessedModiferScema(modifierType.GetConstructor(types), 
-                        scema.Args.Cast<object>().ToArray());
+                        scema.Args?.Cast<object>().ToArray());
                 }
 
                 Debug.Assert(_processedScemas[i].Constructor != null, "Modifier scema is invalid");

@@ -16,5 +16,24 @@
         }
       ]
     }
+  ],
+  "SpellCards": [
+    {
+      "Name": "TestSpellCard",
+      "Mana": 0,
+      "Modifiers": [
+        {
+          "Name": "TestModifier",
+          "Args": [ 1 ]
+        },
+        {
+          "Name": "TestModifier",
+          "Args": [ 123456.123 ]
+        },
+        {
+          "Name": "TestModifier"
+        }
+      ]
+    }
   ]
 }

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using System.IO;
+using System.Text.Json;
 using PujakCardGame;
-using PujakCardGame.ConcreteModifiers;
 
-Card card = new UnitCard("Говно");
-Modifier modifier = new TestModifier(card);
-card.PlayCard(null, null, null);
+using (var stream = File.OpenRead("CardsScemas/cards.json"))
+    CardsDirector.Instance.ProcessScema(JsonSerializer.Deserialize<CardsScema>(stream));
 
 using var game = new PujakCardGame.CardGame();
 game.Run();
