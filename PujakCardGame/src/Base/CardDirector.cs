@@ -1,31 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Diagnostics;
-using System.Collections;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace PujakCardGame
 {
     public class CardsDirector
     {
         private CardsDirector() { }
-
         public static CardsDirector Instance = new CardsDirector();
 
         private readonly Dictionary<string, CardBuilder> _builders = new();
 
+        public ICollection<string> SupportedNames => _builders.Keys;
 
-        public Card ConstructCard(string name)
-        {
-            return _builders[name].Build();
-            /*if (!_builders.TryGetValue(name, out CardBuilder builder))
-            {
-                builder = _configureBuilderFor(name);
-                _builders.Add(name, builder);
-            }
-            return builder.Build();*/
-        }
+        public Card ConstructCard(string name) => _builders[name].Build();
 
         private void _configureBuilderFor(CardBuilder builder, SimpleCardScema scema, string[] namespaces)
         {

@@ -8,6 +8,8 @@ public class Hero : IDamageable, ITargetable, IModifiable
 {
     public readonly List<Card> Hand = new();
     public GameTable Table { get; set; }
+    public Deck Deck { get; private init; }
+    public int CardsPerTurn { private get; set; } = 1;
 
     private int _health;
     public int Health
@@ -23,6 +25,8 @@ public class Hero : IDamageable, ITargetable, IModifiable
     }
 
     private readonly List<IModifier> _modifiers = new();
+
+    public Hero(IEnumerable<string> cardsSequence) => Deck = new Deck(cardsSequence);
 
     public Damage GetAttacked(DamageRequest request)
     {
@@ -63,7 +67,10 @@ public class Hero : IDamageable, ITargetable, IModifiable
 
     public void MakeTurn()
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < CardsPerTurn && Deck.RemainingCount != 0; ++i)
+            Hand.Add(Deck.GetNextCard());
+       
+        TurnBegan?.Invoke(this, EventArgs.Empty);
     }
 
     public event EventHandler<DamageRequest> Damaged;
